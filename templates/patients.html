@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% block title %}Patient List{% endblock %}
+{% block content %}
+    <div class="container-lg mt-5">
+
+        <!-- Table -->
+        <h4 class="text-end"> PATIENT TABLE LIST </h4>
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="d-grid gap-2">
+                    <div class="btn-group btn-group-sm mb-3">
+                        <a href="/register" class="btn btn-success"><i class="fa-solid fa-user-injured"></i> Register Patient</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered border-success table-sm table-hover small" id="patientTable" class="display">
+                    <thead class="table-success text-center">
+                        <tr>
+                            <!-- <th class="hide-column">ID</th> -->
+                            <th>Hospital Record #</th>
+                            <th>Patient Name (Last Name, First Name, Middle Name)</th>
+                            <th>Bithdate</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in patients %}
+                            <tr>
+                                <!-- <td class="hide-column">{{ patient.id }}</td> -->
+                                <td>{{ patient.hpatcode }}</td>
+                                <td>{{ patient.full_name }}</td>
+                                <td class="text-center">{{ patient.pbirthdate }}</td>
+                                <td class="text-center">{{ patient.created_at }}</td>
+                                <td>{{ patient.ptime }}</td>
+                                <td class="text-center">
+                                    <div class="input-group justify-content-center">
+                                        <a class="btn btn-outline-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="button-addon1"><i class="fa-solid fa-pencil"></i></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/edit/{{ patient.id }}">Edit</a></li>
+                                            <li><a class="dropdown-item" type="button" onclick="openConsent({{ patient.id }})" data-bs-backdrop="false">Consent Form</a></li>
+                                            <li><a class="dropdown-item text-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ patient.id }}">Delete</a></li>
+                                          </ul>
+                                        <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#patientModal" onclick="loadPatient({{ patient.id }})"><i class="fa-solid fa-user"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="patientModal" tabindex="-1" aria-labelledby="patientModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="patientModalLabel">Patient Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="font-size: 12px;">
+                    <div class="row">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text bg-success text-white">Health Record #: </span>
+                            <input type="text" class="form-control form-control-sm" id="hpatcode" >
+                        </div>
+                    </div>
+                    <br>
+                    <p style="display: none;"><strong>ID #:</strong><span id="patientId"></span></p>
+                    <h6> BASIC INFORMATION </h6>
+                    <hr class="text-success">
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>PATIENT NAME:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="patientName"></span>
+                        </div>
+                         
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>BIRTHDATE:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="patientBirthdate"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>SEX:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="patientSex"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>CIVIL STATUS:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="patientStatus"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>ADDRESS:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="patientAddress"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <h6> CONTACT PERSON </h6>
+                    <hr class="text-success">
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>CONTACT NAME:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="contactName"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>CONTACT ADDRESS:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="contactAddress"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>CONTACT NUMBER:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="contactTel"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>CONTACT RELATIONSHIP:</strong>
+                        </div>
+                        <div class="col-6">
+                            <span id="contactRelationship"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this patient?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteForm" method="POST">
+                        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadPatient(id) {
+            $.getJSON(`/get_patient/${id}`, function(data) {
+                document.getElementById("patientId").innerText = data.id;
+                document.getElementById("hpatcode").value = data.hcode;
+                document.getElementById("patientName").innerText = data.name;
+                document.getElementById("patientBirthdate").innerText = data.birthdate;
+                document.getElementById("patientSex").innerText = data.sex;
+                document.getElementById("patientStatus").innerText = data.status;
+                document.getElementById("patientAddress").innerText = data.address;
+                document.getElementById("contactName").innerText = data.cperson;
+                document.getElementById("contactAddress").innerText = data.cpaddress;
+                document.getElementById("contactTel").innerText = data.cptel;
+                document.getElementById("contactRelationship").innerText = data.cprelationship;
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var deleteModal = document.getElementById("deleteModal");
+            deleteModal.addEventListener("show.bs.modal", function(event) {
+                var button = event.relatedTarget; // Button that triggered the modal
+                var patientId = button.getAttribute("data-id"); // Get patient ID from button
+                var deleteForm = document.getElementById("deleteForm");
+    
+                // Set the form action to the correct delete URL
+                deleteForm.action = "/delete_patient/" + patientId;
+            });
+        });
+    </script>
+
+    <div class="modal fade" id="consentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-content">
+                <!-- Consent form will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openConsent(patientId) {
+            fetch(`/consent/${patientId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("modal-content").innerHTML = data;
+                new bootstrap.Modal(document.getElementById("consentModal")).show();
+            });
+        }
+
+        function printConsent() {
+            var printContents = document.getElementById("modal-content").innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+        }
+    </script>
+
+{% endblock %}

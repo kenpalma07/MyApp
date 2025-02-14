@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal-header">
+    <h5 class="modal-title">Patient Consent Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+    <p>
+        We respect your privacy and handle your personal data responsibly.
+        <br>
+        By signing this form, you agree to the collection and use of your information for necessary purposes.
+        <br><br>
+        What We Collect:
+        <br>
+        1. Name
+        <br>
+        2. Contact details (phone, address)
+        <br>
+        3. Other relevant information
+        <br><br>
+        Why We Collect It:
+        <br>
+        1. To provide services
+        <br>
+        2. To comply with legal requirements
+        <br>
+        3. To communicate with you
+        <br><br>
+        
+        Your Rights:
+        <br>
+        1. Access, correct, or delete your data
+        <br>
+        2. Withdraw consent anytime
+        <br><br>
+        
+        We do not share your data unless required by law or with your consent.
+        <br><br>
+        
+        Consent:
+        <br>
+        I agree to the collection and use of my data as stated.
+        <br><br><br>
+
+        Full Name: <strong>{{ patient.plname }}, {{ patient.pfname }}, {{ patient.pmname }}</strong>
+        <br>
+        Signature: ____________________________
+        <br>
+        Date: ____________________________
+        <br>
+    </p>
+</div>
+<div class="modal-footer">
+    <a type="button" class="btn btn-secondary" href='/patient'>Close</a>
+    <button class="btn btn-primary" onclick="printConsent()">Print</button>
+</div>
+
+<script>
+    function printConsent() {
+        var modalContent = document.querySelector(".modal-content").innerHTML;
+        var printWindow = window.open("", "", "width=600,height=600");
+        printWindow.document.write("<html><head><title>Print</title></head><body>");
+        printWindow.document.write(modalContent);
+        printWindow.document.write("</body></html>");
+        printWindow.document.close();
+        document.querySelector(".modal-footer").style.display = "none";  // Hide buttons
+        window.print();
+        document.querySelector(".modal-footer").style.display = "block";
+        printWindow.print();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    @media print {
+        .modal-footer {
+            display: none;
+        }
+    }
+</style>
+
+</body>
+</html>

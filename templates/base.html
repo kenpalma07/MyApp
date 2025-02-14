@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select/dist/css/bootstrap-select.min.css">
+        <!-- DataTables CSS & JS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+        <style>
+            body {
+                margin-left: 250px; /* Adjust this to match the sidebar width */
+            }
+            .sidebar {
+                width: 250px;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: #198754; /* Dark theme */
+                padding-top: 20px;
+            }
+            .sidebar a {
+                color: white;
+                padding: 10px 20px;
+                display: block;
+                text-decoration: none;
+            }
+            .sidebar a:hover {
+                background-color: #198754;
+            }
+            .hide-column {
+                display: none;
+            }
+            .table-sm td, .table-sm th {
+                font-size: 12px; /* Adjust size as needed */
+                padding: 4px;    /* Reduce padding */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar">
+            <h4 class="text-center text-light">My App</h4>
+            <br>
+            <a href="/patient"><i class="fa-solid fa-hospital-user"></i> Patient List </a>   
+        </div>
+        {% block content %}
+        {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    </body>
+
+    <script>
+        $(document).ready( function () {
+            $('#patientTable').DataTable({
+                "paging": true,
+                "processing": true,
+                "searching": true,
+                "ordering": true,
+                "pageLength": 10
+            });
+        });
+    </script>
+</html>

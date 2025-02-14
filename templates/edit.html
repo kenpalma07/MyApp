@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %} Edit Patient {% endblock %}
+{% block content %}
+    <div class="container-lg mt-5">
+        <h4 class="text-end"> EDIT PATIENT </h4>
+
+        <form method="POST" action="{{ url_for('update', patient_id=patient.id) }}">
+            <h6> BASIC INFORMATION </h6>
+
+            <div class="row mb-3 justify-content-between">
+                <div class="col-5">
+                    <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text bg-success text-white"> Hospital Record # : </span>
+                        <input type="text" class="form-control form-control-sm" id="hpatcode" value="{{ patient.hpatcode }}" name="hpatcode" readonly>
+                        <button class="btn btn-outline-success" type="button" id="button-addon2"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+                <div class="col-2 d-grid gap-1">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i> Save
+                    </button>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="PFirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control form-control-sm" id="pfname" name="pfname" value="{{ patient.pfname }}" required>
+                </div>
+                <div class="col">
+                    <label for="PMiddleName" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control form-control-sm" id="pmname" name="pmname" value="{{ patient.pmname }}" required>
+                </div>
+                <div class="col">
+                    <label for="PLastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control form-control-sm" id="plname" name="plname" value="{{ patient.plname }}" required>
+                </div>
+                <div class="col">
+                    <label for="PSuffixes" class="form-label" required>Suffixes</label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="psuffix" name="psuffix">
+                        <option selected value="N/A" {% if patient.psuffix == "N/A" %} selected {% endif %}>Select</option>
+                        <option value="SR" {% if patient.psuffix == "SR" %} selected {% endif %}>SR</option>
+                        <option value="JR" {% if patient.psuffix == "JR" %} selected {% endif %}>JR</option>
+                        <option value="I" {% if patient.psuffix == "I" %} selected {% endif %}>I</option>
+                        <option value="II" {% if patient.psuffix == "II" %} selected {% endif %}>II</option>
+                        <option value="III" {% if patient.psuffix == "III" %} selected {% endif %}>III</option>
+                        <option value="IV" {% if patient.psuffix == "IV" %} selected {% endif %}>IV</option>
+                        <option value="V" {% if patient.psuffix == "V" %} selected {% endif %}>V</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="PBirthday" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control form-control-sm" id="pbirthdate" name="pbirthdate" value="{{ patient.pbirthdate }}">
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <label for="PSex" class="form-label"> Sex </label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="psex" name="psex">
+                        <option selected>Select</option>
+                        <option value="Male" {% if patient.psex == "Male" %} selected {% endif %}>Male</option>
+                        <option value="Female" {% if patient.psex == "Female" %} selected {% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="PSex" class="form-label"> Civil Status </label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="pcstatus" name="pcstatus">
+                        <option selected>Select</option>
+                        <option value="Single" {% if patient.pcstatus == "Single" %} selected {% endif %}>Single</option>
+                        <option value="Married" {% if patient.pcstatus == "Married" %} selected {% endif %}>Married</option>
+                        <option value="Divorced" {% if patient.pcstatus == "Divorced" %} selected {% endif %}>Divorced</option>
+                        <option value="Separated" {% if patient.pcstatus == "Separated" %} selected {% endif %}>Separated</option>
+                        <option value="Widow/widower" {% if patient.pcstatus == "Widow/widower" %} selected {% endif %}>Widow/Widower</option>
+                        <option value="N/A" {% if patient.pcstatus == "N/A" %} selected {% endif %}>N/A</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <h6> DEMOGRAPHIC INFORMATION </h6>
+                <div class="col">
+                    <label for="PAddress" class="form-label"> Present Address </label>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">No. of Street</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psaddress" name="psaddress" value="{{ patient.psaddress }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Municipality/City</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pscity" name="pscity" value="{{ patient.pscity }}"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">Barangay</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psbrgy" name="psbrgy" value="{{ patient.psbrgy }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Region</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psregion" name="psregion" value="{{ patient.psregion }}"></textarea>
+                        <span class="input-group-text bg-success text-white">District</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psdistrict" name="psdistrict" value="{{ patient.psdistrict }}"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-success text-white">Province</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psprovince" name="psprovince" value="{{ patient.psprovince }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Zipcode</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pszipcode" name="pszipcode" value="{{ patient.pszipcode }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Country</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pscountry" name="pscountry" value="{{ patient.pscountry }}"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label for="PAddress" class="form-label"> Permanent Address </label>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">No. of Street</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="praddress" name="praddress" value="{{ patient.praddress }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Municipality/City</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prcity" name="prcity" value="{{ patient.prcity }}"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">Barangay</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prbrgy" name="prbrgy" value="{{ patient.prbrgy }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Region</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prregion" name="prregion" value="{{ patient.prregion }}"></textarea>
+                        <span class="input-group-text bg-success text-white">District</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prdistrict" name="prdistrict" value="{{ patient.prdistrict }}"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-success text-white">Province</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prprovince" name="prprovince" value="{{ patient.prprovince }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Zipcode</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="przipcode" name="przipcode" value="{{ patient.przipcode }}"></textarea>
+                        <span class="input-group-text bg-success text-white">Country</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prcountry" name="prcountry" value="{{ patient.prcountry }}"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <h6><i class="fa-solid fa-address-book text-success"></i> CONTACT PERSON </h6>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white">Contact Name</span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cpname" name="cpname" value="{{ patient.cpname }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Address </span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cpaddress" name="cpaddress" value="{{ patient.cpaddress }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Mobile/Tel </span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cptel" name="cptel" value="{{ patient.cptel }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Relationships </span>
+                            <select select class="form-select form-select-sm" aria-label="Small select example" id="cprelationship" name="cprelationship">
+                                <option value="" {% if patient.cprelationship == "" %} selected {% endif %}>Select Relationship</option>
+                                <option value="Mother" {% if patient.cprelationship == "Mother" %} selected {% endif %}>Mother</option>
+                                <option value="Father" {% if patient.cprelationship == "Father" %} selected {% endif %}>Father</option>
+                                <option value="Sister" {% if patient.cprelationship == "Sister" %} selected {% endif %}>Sister</option>
+                                <option value="Brother" {% if patient.cprelationship == "Brother" %} selected {% endif %}>Brother</option>
+                                <option value="Aunt" {% if patient.cprelationship == "Aunt" %} selected {% endif %}>Aunt</option>
+                                <option value="Uncle" {% if patient.cprelationship == "Uncle" %} selected {% endif %}>Uncle</option>
+                                <option value="Nephew" {% if patient.cprelationship == "Nephew" %} selected {% endif %}>Nephew</option>
+                                <option value="Niece" {% if patient.cprelationship == "Niece" %} selected {% endif %}>Niece</option>
+                                <option value="Cousin" {% if patient.cprelationship == "Cousin" %} selected {% endif %}>Cousin</option>
+                                <option value="Spouse" {% if patient.cprelationship == "Spouse" %} selected {% endif %}>Spouse</option>
+                                <option value="Son" {% if patient.cprelationship == "Son" %} selected {% endif %}>Son</option>
+                                <option value="Daughter" {% if patient.cprelationship == "Daughter" %} selected {% endif %}>Daughter</option>
+                                <option value="Head" {% if patient.cprelationship == "Head" %} selected {% endif %}>Head of the Family</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

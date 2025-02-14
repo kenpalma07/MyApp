@@ -1,0 +1,82 @@
+@app.route('/submit', methods=['GET','POST'])
+def receive_data():
+    global current_number
+    formatted_number = f"{current_number:015d}"
+    
+    if request.method == 'POST':
+        # Simulate saving the form (e.g., in a database)
+        print("Form submitted with ID:", formatted_number)
+        current_number += 1  # Increment for next entry
+    
+    data = request.get_json()
+    
+    if not data:
+        return jsonify({"error": "No data received"}), 400
+    
+    hpatcode = data.get('hpatcode')
+    pfname = data.get('pfname')
+    pmname = data.get('pmname')
+    plname = data.get('plname')
+    psuffix = data.get('psuffix')
+    pbirthdate = data.get('pbirthdate')
+    psex = data.get('psex')
+    pstatus = data.get('pstatus')
+    psaddress = data.get('psaddress')
+    pscity = data.get('pscity')
+    psbrgy = data.get('psbrgy')
+    psregion = data.get('psregion')
+    psdistrict = data.get('psdistrict')
+    psprovince = data.get('psprovince')
+    pszipcode = data.get('pszipcode')
+    pscountry = data.get('pscountry')
+    praddress = data.get('praddress')
+    prcity = data.get('prcity')
+    prbrgy = data.get('prbrgy')
+    prregion = data.get('prregion')
+    prdistrict = data.get('prdistrict')
+    prprovince = data.get('prprovince')
+    przipcode = data.get('przipcode')
+    prcountry = data.get('prcountry')
+    cpname = data.get('cpname')
+    cpaddress = data.get('cpaddress')
+    cptel = data.get('cptel')
+    cprelationship = data.get('cprelationship')
+    
+    # Create a new patient record
+    new_patient = register_bp(
+        hpatcode=hpatcode,
+        pfname=pfname,
+        pmname=pmname,
+        plname=plname,
+        psuffix=psuffix,
+        pbirthdate=pbirthdate,
+        psex=psex,
+        pstatus=pstatus,
+        psaddress=psaddress,
+        pscity=pscity,
+        psbrgy=psbrgy,
+        psregion=psregion,
+        psdistrict=psdistrict,
+        psprovince=psprovince,
+        pszipcode=pszipcode,
+        pscountry=pscountry,
+        praddress=praddress,
+        prcity=prcity,
+        prbrgy=prbrgy,
+        prregion=prregion,
+        prdistrict=prdistrict,
+        prprovince=prprovince,
+        przipcode=przipcode,
+        prcountry=prcountry,
+        cpname=cpname,
+        cpaddress=cpaddress,
+        cptel=cptel,
+        cprelationship=cprelationship
+    )
+    
+    # Add the new patient to the session and commit
+    db.session.add(new_patient)
+    db.session.commit()
+
+    
+    return jsonify({"message": "Data received successfully", "data": data})

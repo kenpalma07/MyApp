@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% block title %}Register Patient{% endblock %}
+<html>
+    {% block content %}
+    <!--<script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            let getData = document.getElementById("myForm");
+            let formData = new FormData(getData);
+
+            fetch("/", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"  // Identify AJAX request
+                }
+            })
+            .then(response => response.json())  // Parse JSON response
+            .then(data => {
+                alert("Data submitted successfully!");  // Show success message
+                document.getElementById("hpatcode").value = data.next_number;  // Update ID field
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script> -->
+
+    <div class="container-lg mt-5">
+        <!-- Header -->
+        <h4 class="text-end"> PATIENT REGISTRATION FORM </h4>
+
+        <form id="myForm" method="POST" action="/submit">
+            <h6> BASIC INFORMATION </h6>
+            <!-- Patient Information -->
+            <div class="row mb-3 justify-content-between">
+                <div class="col-5">
+                    <div class="input-group input-group-sm mb-2">
+                        <span class="input-group-text bg-success text-white"> Hospital Record # : </span>
+                        <input type="text" class="form-control form-control-sm" id="hpatcode" value="{{ formatted_number }}" name="hpatcode" readonly>
+                        <button class="btn btn-outline-success" type="button" id="button-addon2"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                </div>
+                <div class="col-2 d-grid gap-1">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i> Save
+                    </button>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="PFirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control form-control-sm" id="pfname" name="pfname" required>
+                </div>
+                <div class="col">
+                    <label for="PMiddleName" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control form-control-sm" id="pmname" name="pmname" required>
+                </div>
+                <div class="col">
+                    <label for="PLastName" class="form-label ">Last Name</label>
+                    <input type="text" class="form-control form-control-sm" id="plname" name="plname" required>
+                </div>
+                <div class="col">
+                    <label for="PSuffixes" class="form-label">Suffixes</label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="psuffix" name="psuffix" required>
+                        <option selected value="N/A">Select</option>
+                        <option value="SR">SR</option>
+                        <option value="JR">JR</option>
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="V">V</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="PDateOfBirth" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control form-control-sm" id="pbirthdate" name="pbirthdate" required>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <label for="PSex" class="form-label"> Sex </label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="psex" name="psex" required>
+                        <option selected>Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="PSex" class="form-label"> Civil Status </label>
+                    <select class="form-select form-select-sm" aria-label="Default select example" id="pcstatus" name="pcstatus" required>
+                        <option selected>Select</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Separated">Separated</option>
+                        <option value="Widow/widower">Widow/Widower</option>
+                        <option value="N/A">N/A</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <!-- End of Patient Information -->
+
+            <!-- Demographic Information -->
+            <div class="row">
+                <h6> DEMOGRAPHIC INFORMATION </h6>
+                <div class="col">
+                    <label for="PAddress" class="form-label"> Present Address </label>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">No. of Street</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psaddress" name="psaddress"></textarea>
+                        <span class="input-group-text bg-success text-white">Municipality/City</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pscity" name="pscity"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">Barangay</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psbrgy" name="psbrgy">
+                        <span class="input-group-text bg-success text-white">Region</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psregion" name="psregion">
+                        <span class="input-group-text bg-success text-white">District</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psdistrict" name="psdistrict">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-success text-white">Province</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="psprovince" name="psprovince">
+                        <span class="input-group-text bg-success text-white">Zipcode</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pszipcode" name="pszipcode">
+                        <span class="input-group-text bg-success text-white">Country</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="pscountry" name="pscountry">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label for="PAddress" class="form-label"> Permanent Address </label>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">No. of Street</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="praddress" name="praddress"></textarea>
+                        <span class="input-group-text bg-success text-white">Municipality/City</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prcity" name="prcity"></textarea>
+                    </div>
+                    <div class="input-group input-group-sm mb-1">
+                        <span class="input-group-text bg-success text-white">Barangay</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prbrgy" name="prbrgy">
+                        <span class="input-group-text bg-success text-white">Region</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prregion" name="prregion">
+                        <span class="input-group-text bg-success text-white">District</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prdistrict" name="prdistrict">
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-success text-white">Province</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prprovince" name="prprovince">
+                        <span class="input-group-text bg-success text-white">Zipcode</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="przipcode" name="przipcode">
+                        <span class="input-group-text bg-success text-white">Country</span>
+                        <input type="text" class="form-control form-control-sm" placeholder="Input here" id="prcountry" name="prcountry">
+                    </div>
+                </div>
+            </div>
+            <!-- End of Demographic Information -->
+
+            <hr>
+            <h6><i class="fa-solid fa-address-book text-success"></i> CONTACT PERSON </h6>
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white">Contact Name</span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cpname" name="cpname">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Address </span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cpaddress" name="cpaddress">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Mobile/Tel </span>
+                            <input type="text" class="form-control form-control-sm" placeholder="Input here" id="cptel" name="cptel">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group input-group-sm mb-1">
+                            <span class="input-group-text bg-success text-white"> Relationships </span>
+                            <select select class="form-select form-select-sm" aria-label="Small select example" id="cprelationship" name="cprelationship">
+                                <option value="">Select Relationship</option>
+                                <option value="mother">Mother</option>
+                                <option value="father">Father</option>
+                                <option value="sister">Sister</option>
+                                <option value="brother">Brother</option>
+                                <option value="aunt">Aunt</option>
+                                <option value="uncle">Uncle</option>
+                                <option value="newphew">Nephew</option>
+                                <option value="niece">Niece</option>
+                                <option value="cousin">Cousin</option>
+                                <option value="spouse">Spouse</option>
+                                <option value="son">Son</option>
+                                <option value="daughter">Daughter</option>
+                                <option value="head">Head of the Family</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Submit Button -->
+            <hr>
+            <div class="row justify-content-end">
+                <div class="col-2 d-grid gap-1">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk"></i> Save
+                    </button>    
+                </div>
+            </div>
+            <!-- End Submit Button -->
+        </form>
+        </div>
+
+        <!--Javascript-->
+    {% endblock %}
+    
+</html>
